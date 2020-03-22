@@ -1,3 +1,4 @@
+#
 # This is free software, lisence use MIT.
 # 
 # Copyright (C) 2019 P3TERX <https://p3terx.com>
@@ -13,7 +14,7 @@ on:
     branches: 
       - master
   schedule:
-    - cron: 0 20 * * *
+    - cron: 0 2 1 * *
   release:
      types: [published]
 
@@ -90,6 +91,7 @@ jobs:
           CONFIG_TARGET_armvirt=y
           CONFIG_TARGET_armvirt_64=y
           CONFIG_TARGET_armvirt_64_Default=y
+          CONFIG_KERNEL_MIPS_FPU_EMULATOR=y
           EOF
           # 固件压缩:
           cat >> .config <<EOF
@@ -128,12 +130,7 @@ jobs:
           EOF
           #WIFI Firemware支持:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_brcmfmac-firmware-4329-sdio=y
-          CONFIG_PACKAGE_brcmfmac-firmware-43362-sdio=y
           CONFIG_PACKAGE_brcmfmac-firmware-43430-sdio=y
-          CONFIG_PACKAGE_brcmfmac-firmware-43430-sdio-rpi-3b=y
-          CONFIG_PACKAGE_brcmfmac-firmware-43430-sdio-rpi-zero-w=y
-          CONFIG_PACKAGE_brcmfmac-firmware-43430a0-sdio=y
           CONFIG_PACKAGE_brcmfmac-firmware-43455-sdio=y
           CONFIG_PACKAGE_brcmfmac-firmware-43455-sdio-rpi-3b-plus=y
           CONFIG_PACKAGE_brcmfmac-firmware-43455-sdio-rpi-4b=y
@@ -145,10 +142,24 @@ jobs:
           cat >> .config <<EOF
           CONFIG_PACKAGE_kmod-brcmfmac=y
           CONFIG_BRCMFMAC_SDIO=y
+          CONFIG_BRCMFMAC_USB=y
+          CONFIG_PACKAGE_kmod-cfg80211=y
+          CONFIG_PACKAGE_kmod-mac80211=y
+          CONFIG_PACKAGE_MAC80211_MESH=y
+          CONFIG_PACKAGE_uuidgen=y
           CONFIG_PACKAGE_kmod-brcmutil=y
           CONFIG_PACKAGE_kmod-cfg80211=y
           CONFIG_PACKAGE_kmod-mac80211=y
           CONFIG_PACKAGE_MAC80211_MESH=y
+          CONFIG_PACKAGE_wireless-tools=y
+          CONFIG_PACKAGE_hostapd=y
+          CONFIG_PACKAGE_hostapd-common=y
+          CONFIG_PACKAGE_wpa-cli=y
+          CONFIG_PACKAGE_wpa-supplicant=y
+          CONFIG_WPA_MSG_MIN_PRIORITY=3
+          CONFIG_DRIVER_11N_SUPPORT=y
+          CONFIG_DRIVER_11AC_SUPPORT=y
+          CONFIG_DRIVER_11W_SUPPORT=y
           EOF
           #Input modules支持:
           cat >> .config <<EOF
@@ -185,12 +196,11 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
-          CONFIG_PACKAGE_luci-app-upnp=y
+          CONFIG_PACKAGE_redsocks2=y
+          # CONFIG_PACKAGE_luci-app-upnp=y
           # CONFIG_PACKAGE_luci-app-vlmcsd is not set
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
-          CONFIG_PACKAGE_luci-app-zerotier is not set
+          # CONFIG_PACKAGE_luci-app-zerotier is not set
           CONFIG_PACKAGE_luci-app-wol=y
           EOF
           # LuCI主题:
@@ -239,24 +249,6 @@ jobs:
           CONFIG_PACKAGE_perlbase-config=y
           CONFIG_PACKAGE_perlbase-essential=y
           CONFIG_PACKAGE_perlbase-unicore=y          
-          EOF
-          #wifi tools
-          cat >> .config <<EOF
-          CONFIG_PACKAGE_kmod-brcmfmac=y
-          CONFIG_BRCMFMAC_SDIO=y
-          CONFIG_PACKAGE_kmod-brcmutil=y
-          CONFIG_PACKAGE_kmod-cfg80211=y
-          CONFIG_PACKAGE_kmod-mac80211=y
-          CONFIG_PACKAGE_MAC80211_MESH=y
-          CONFIG_PACKAGE_wireless-tools=y
-          CONFIG_PACKAGE_hostapd=y
-          CONFIG_PACKAGE_hostapd-common=y
-          CONFIG_PACKAGE_wpa-cli=y
-          CONFIG_PACKAGE_wpa-supplicant=y
-          CONFIG_WPA_MSG_MIN_PRIORITY=3
-          CONFIG_DRIVER_11N_SUPPORT=y
-          CONFIG_DRIVER_11AC_SUPPORT=y
-          CONFIG_DRIVER_11W_SUPPORT=y     
           EOF
           # 
           # ========================固件定制部分结束========================
